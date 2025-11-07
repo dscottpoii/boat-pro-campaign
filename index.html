@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Hub - The Boat Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .logo-container {
+            width: 150px;
+            height: auto;
+            margin: 0 auto 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .logo-wave {
+            fill: #153455;
+        }
+
+        .logo-text-red {
+            fill: #DC2626;
+            font-family: Arial, sans-serif;
+            font-weight: 900;
+        }
+
+        .logo-text-blue {
+            fill: #153455;
+            font-family: Arial, sans-serif;
+            font-weight: 900;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .nav-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .nav-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #153455;
+            margin-bottom: 10px;
+        }
+
+        .nav-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .nav-badge {
+            display: inline-block;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .nav-badge.primary {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .nav-badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .flow-diagram {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .flow-diagram h2 {
+            color: #153455;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: #153455;
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .flow-step-number {
+            background: #153455;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 700;
+        }
+
+        .flow-step-title {
+            font-weight: 600;
+            color: #153455;
+            margin-bottom: 5px;
+        }
+
+        .flow-step-desc {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .stats-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #DC2626;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .quick-actions {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .quick-actions h3 {
+            color: #153455;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #153455 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(21, 52, 85, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #f8fafc 0%, #e5e7eb 100%);
+            color: #153455;
+        }
+
+        @media (max-width: 768px) {
+            .flow-steps {
+                flex-direction: column;
+            }
+
+            .flow-step::after {
+                content: '↓';
+                right: 50%;
+                top: auto;
+                bottom: -35px;
+                transform: translateX(50%);
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                <!-- Wave/Sail Shape -->
+                <path class="logo-wave" d="M 40,60 Q 70,20 120,50 L 110,70 Q 80,50 60,70 L 50,65 Q 55,55 40,60 Z"/>
+                <!-- BOAT in Red -->
+                <text x="100" y="95" class="logo-text-red" font-size="24" text-anchor="middle">BOAT</text>
+                <!-- PRO in Blue -->
+                <text x="100" y="110" class="logo-text-blue" font-size="20" text-anchor="middle">PRO</text>
+            </svg>
+        </div>
+        <h1>Campaign Hub</h1>
+        <p>Your complete Facebook marketing system - all connected</p>
+    </div>
+
+    <div class="container">
+        <!-- Real-time Stats -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value" id="totalLeads">0</div>
+                <div class="stat-label">Total Leads</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="totalMembers">0</div>
+                <div class="stat-label">Members</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="totalRevenue">$0</div>
+                <div class="stat-label">Revenue</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="conversionRate">0%</div>
+                <div class="stat-label">Conversion</div>
+            </div>
+        </div>
+
+        <!-- Campaign Flow -->
+        <div class="flow-diagram">
+            <h2>Campaign Flow</h2>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-step-title">Facebook Ad</div>
+                    <div class="flow-step-desc">User clicks ad</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-step-title">Landing Page</div>
+                    <div class="flow-step-desc">Downloads guide</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-step-title">Pop-Up</div>
+                    <div class="flow-step-desc">After 30 seconds</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div class="flow-step-title">Membership</div>
+                    <div class="flow-step-desc">Premium/Lifetime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Cards -->
+        <div class="nav-grid">
+            <!-- Landing Page -->
+            <a href="#" class="nav-card" onclick="openPage('landing'); return false;">
+                <div class="nav-icon">🎯</div>
+                <div class="nav-title">Landing Page</div>
+                <div class="nav-description">
+                    Winterization guide lead capture with 30-second membership pop-up. This is where Facebook ads send traffic.
+                </div>
+                <span class="nav-badge primary">Start Here</span>
+            </a>
+
+            <!-- Membership Page -->
+            <a href="#" class="nav-card" onclick="openPage('membership'); return false;">
+                <div class="nav-icon">💎</div>
+                <div class="nav-title">Membership Signup</div>
+                <div class="nav-description">
+                    Direct membership signup page for Premium ($19.99/mo) and Lifetime ($299). Links from pop-up and emails.
+                </div>
+                <span class="nav-badge">Connected</span>
+            </a>
+
+            <!-- Analytics Dashboard -->
+            <a href="#" class="nav-card" onclick="openPage('analytics'); return false;">
+                <div class="nav-icon">📊</div>
+                <div class="nav-title">Analytics Dashboard</div>
+                <div class="nav-description">
+                    Real-time tracking of leads, conversions, revenue, and ROI. See exactly how your campaign is performing.
+                </div>
+                <span class="nav-badge">Live Data</span>
+            </a>
+
+            <!-- ROI Calculator -->
+            <a href="#" class="nav-card" onclick="openPage('calculator'); return false;">
+                <div class="nav-icon">🧮</div>
+                <div class="nav-title">ROI Calculator</div>
+                <div class="nav-description">
+                    Project your campaign returns. Adjust budget, leads, and pricing to forecast profit and ROI.
+                </div>
+                <span class="nav-badge warning">Planning Tool</span>
+            </a>
+
+            <!-- Ad Templates -->
+            <a href="#" class="nav-card" onclick="openPage('ads'); return false;">
+                <div class="nav-icon">📱</div>
+                <div class="nav-title">Facebook Ads</div>
+                <div class="nav-description">
+                    5 ready-to-use ad templates with copy, headlines, and CTAs. Just copy and paste into Facebook Ads Manager.
+                </div>
+                <span class="nav-badge">Copy & Paste</span>
+            </a>
+
+            <!-- Email Sequence -->
+            <a href="#" class="nav-card" onclick="openPage('emails'); return false;">
+                <div class="nav-icon">✉️</div>
+                <div class="nav-title">Email Follow-Up</div>
+                <div class="nav-description">
+                    6-email automated sequence to convert guide downloaders into paid members. Pre-written and ready to use.
+                </div>
+                <span class="nav-badge">6 Emails</span>
+            </a>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>🚀 Quick Actions</h3>
+            <button class="action-btn" onclick="testCampaign()">
+                Test Full Campaign Flow →
+            </button>
+            <button class="action-btn secondary" onclick="exportAllData()">
+                Export All Campaign Data
+            </button>
+            <button class="action-btn secondary" onclick="viewGuide()">
+                View Implementation Guide
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Load real-time stats
+        async function loadStats() {
+            try {
+                const result = await window.storage.get('boat_pro_all_leads');
+                const leads = result ? JSON.parse(result.value) : [];
+
+                const totalLeads = leads.filter(l => l.type === 'lead').length;
+                const memberships = leads.filter(l => l.type === 'membership');
+                const premiumMembers = memberships.filter(m => m.tier === 'premium').length;
+                const lifetimeMembers = memberships.filter(m => m.tier === 'lifetime').length;
+                const totalMembers = premiumMembers + lifetimeMembers;
+
+                const premiumRevenue = premiumMembers * 19.99 * 3;
+                const lifetimeRevenue = lifetimeMembers * 299;
+                const totalRevenue = premiumRevenue + lifetimeRevenue;
+
+                const conversionRate = totalLeads > 0 ? ((totalMembers / totalLeads) * 100).toFixed(1) : 0;
+
+                document.getElementById('totalLeads').textContent = totalLeads;
+                document.getElementById('totalMembers').textContent = totalMembers;
+                document.getElementById('totalRevenue').textContent = `$${totalRevenue.toLocaleString()}`;
+                document.getElementById('conversionRate').textContent = `${conversionRate}%`;
+
+            } catch (error) {
+                console.log('No data yet');
+            }
+        }
+
+        function openPage(page) {
+            const pageMap = {
+                'landing': 'Opening Winterization Landing Page with Pop-Up...',
+                'membership': 'Opening Membership Signup Page...',
+                'analytics': 'Opening Analytics Dashboard...',
+                'calculator': 'Opening ROI Calculator...',
+                'ads': 'Opening Facebook Ad Templates...',
+                'emails': 'Opening Email Follow-Up Sequence...'
+            };
+
+            alert(pageMap[page] + '\n\nIn production, this would navigate to the actual page.\n\nFor this demo, all pages are available as separate artifacts in your conversation.');
+        }
+
+        function testCampaign() {
+            const steps = [
+                '1. User clicks Facebook ad',
+                '2. Lands on guide capture page',
+                '3. Enters name and email',
+                '4. Downloads winterization guide',
+                '5. Sees membership pop-up after 30 seconds',
+                '6. Chooses Premium ($19.99/mo) or Lifetime ($299)',
+                '7. Data tracked in analytics',
+                '8. Follow-up emails begin automatically'
+            ];
+
+            alert('Campaign Flow Test:\n\n' + steps.join('\n\n') + '\n\nAll pages are connected and share data through storage. Test by using the Landing Page artifact!');
+        }
+
+        async function exportAllData() {
+            try {
+                const result = await window.storage.get('boat_pro_all_leads');
+                const leads = result ? JSON.parse(result.value) : [];
+
+                if (leads.length === 0) {
+                    alert('No data to export yet. Run the campaign first!');
+                    return;
+                }
+
+                const headers = ['Date', 'First Name', 'Email', 'Type', 'Tier', 'Price', 'Source'];
+                const rows = leads.map(lead => {
+                    return [
+                        new Date(lead.timestamp).toLocaleString(),
+                        lead.firstName || '',
+                        lead.email || '',
+                        lead.type || '',
+                        lead.tier || '',
+                        lead.price || '',
+                        lead.source || ''
+                    ];
+                });
+
+                let csv = headers.join(',') + '\n';
+                rows.forEach(row => {
+                    csv += row.map(field => `"${field}"`).join(',') + '\n';
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `boat_pro_complete_export_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+
+                alert('Data exported successfully!');
+
+            } catch (error) {
+                alert('No data to export yet.');
+            }
+        }
+
+        function viewGuide() {
+            alert('Implementation Guide:\n\n' +
+                  '1. Use Landing Page artifact for lead capture\n' +
+                  '2. Use Facebook Ad Templates for ad copy\n' +
+                  '3. Set up Email Sequence in your email platform\n' +
+                  '4. Monitor with Analytics Dashboard\n' +
+                  '5. Plan budget with ROI Calculator\n\n' +
+                  'All artifacts are available in your conversation history!');
+        }
+
+        loadStats();
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>
