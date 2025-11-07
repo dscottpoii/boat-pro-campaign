@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Premium Membership - The Boat Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: #0c4a6e;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .nav-bar a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            margin-top: 15px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: -50px auto 60px;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        /* Membership Cards */
+        .membership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .membership-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border: 3px solid #e5e7eb;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .membership-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+
+        .membership-card.popular {
+            border-color: #0284c7;
+            background: linear-gradient(to bottom, #f0f9ff, white);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: #0284c7;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+        }
+
+        .membership-title {
+            font-size: 1.8em;
+            color: #0c4a6e;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .membership-price {
+            font-size: 3em;
+            color: #0284c7;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .membership-price .period {
+            font-size: 0.35em;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .savings {
+            color: #16a34a;
+            font-weight: 600;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            color: #16a34a;
+            margin-right: 12px;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .cta-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.15em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(2, 132, 199, 0.3);
+        }
+
+        .lifetime-btn {
+            background: linear-gradient(135deg, #0c4a6e 0%, #16a34a 100%);
+        }
+
+        /* Guarantee Section */
+        .guarantee {
+            text-align: center;
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 30px;
+            background: #f0fdf4;
+            border-radius: 12px;
+            border-left: 4px solid #16a34a;
+        }
+
+        .guarantee-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .guarantee h3 {
+            color: #166534;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .guarantee p {
+            color: #15803d;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            color: #0c4a6e;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 25px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: #0c4a6e;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .faq-answer {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: #f8fafc;
+            padding: 60px 20px;
+            margin: 60px 0;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            color: #0c4a6e;
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .stars {
+            color: #f59e0b;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            color: #333;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .author-info {
+            font-weight: 600;
+            color: #0c4a6e;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .membership-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .membership-price {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-bar">
+        <a href="#" onclick="goToHub(); return false;">← Back to Campaign Hub</a>
+        <a href="#" onclick="goToLanding(); return false;">Free Winterization Guide</a>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <svg class="hero-logo" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <path fill="white" d="M 40,60 Q 70,20 120,50 L 110,70 Q 80,50 60,70 L 50,65 Q 55,55 40,60 Z"/>
+            <text x="100" y="95" fill="white" font-size="24" font-weight="900" text-anchor="middle">BOAT</text>
+            <text x="100" y="110" fill="white" font-size="20" font-weight="900" text-anchor="middle">PRO</text>
+        </svg>
+        <h1>Join The Boat Pro Premium</h1>
+        <p>Year-round expert guidance for confident boat ownership</p>
+        <div class="badge">🏆 2,000+ Members • 30-Day Guarantee</div>
+    </div>
+
+    <!-- Membership Options -->
+    <div class="container">
+        <div class="membership-grid">
+            <!-- Premium Monthly -->
+            <div class="membership-card">
+                <div class="membership-title">Premium Monthly</div>
+                <div class="membership-price">
+                    $19.99<span class="period">/month</span>
+                </div>
+                <p style="color: #666; margin-bottom: 25px;">Perfect for getting started • Cancel anytime</p>
+                
+                <ul class="features-list">
+                    <li><span class="feature-icon">✓</span> Monthly seasonal maintenance guides</li>
+                    <li><span class="feature-icon">✓</span> 50+ video tutorials (engine, electrical, plumbing)</li>
+                    <li><span class="feature-icon">✓</span> Live monthly Q&A webinars with experts</li>
+                    <li><span class="feature-icon">✓</span> Priority email support (24-hour response)</li>
+                    <li><span class="feature-icon">✓</span> Member-only discounts on parts & services</li>
+                    <li><span class="feature-icon">✓</span> Complete troubleshooting library</li>
+                    <li><span class="feature-icon">✓</span> Spring commissioning guides</li>
+                    <li><span class="feature-icon">✓</span> Emergency repair procedures</li>
+                    <li><span class="feature-icon">✓</span> New content added monthly</li>
+                </ul>
+
+                <a href="#" class="cta-btn" onclick="selectMembership('premium'); return false;">
+                    Start Premium Membership →
+                </a>
+            </div>
+
+            <!-- Lifetime -->
+            <div class="membership-card popular">
+                <div class="popular-badge">🏆 BEST VALUE - Save $340+</div>
+                <div class="membership-title">Lifetime Access</div>
+                <div class="membership-price">
+                    $299<span class="period">one-time</span>
+                </div>
+                <p class="savings">💰 Pay once, access forever • Save $340+ in Year 2!</p>
+                
+                <ul class="features-list">
+                    <li><span class="feature-icon">✓</span> <strong>Everything in Premium PLUS:</strong></li>
+                    <li><span class="feature-icon">✓</span> <strong>Lifetime access</strong> - never pay again</li>
+                    <li><span class="feature-icon">✓</span> All future content automatically included</li>
+                    <li><span class="feature-icon">✓</span> Exclusive lifetime member forum</li>
+                    <li><span class="feature-icon">✓</span> Priority support upgrade (12-hour response)</li>
+                    <li><span class="feature-icon">✓</span> Early access to new features & content</li>
+                    <li><span class="feature-icon">✓</span> Lifetime member badge & recognition</li>
+                    <li><span class="feature-icon">✓</span> Special lifetime-only webinars</li>
+                    <li><span class="feature-icon">✓</span> Transferable to future boat owners</li>
+                </ul>
+
+                <a href="#" class="cta-btn lifetime-btn" onclick="selectMembership('lifetime'); return false;">
+                    Get Lifetime Access Now →
+                </a>
+            </div>
+        </div>
+
+        <!-- Guarantee -->
+        <div class="guarantee">
+            <div class="guarantee-icon">🛡️</div>
+            <h3>30-Day Money-Back Guarantee</h3>
+            <p>Try The Boat Pro Premium completely risk-free. If you don't save at least 10x your membership cost in the first year, or if you're not completely satisfied for any reason, we'll refund every penny. No questions asked.</p>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials">
+        <h2>What Our Members Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"Saved me $3,200 in the first 3 months by catching an engine issue early through one of the video tutorials. This membership has paid for itself many times over."</p>
+                <div class="author-info">John Martinez, Catalina 36</div>
+            </div>
+
+            <div class="testimonial">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"As a new boat owner, I was completely overwhelmed. The monthly guides and 24-hour support give me so much confidence. Best investment I've made for my boat."</p>
+                <div class="author-info">Sarah Kim, Boston Whaler 210</div>
+            </div>
+
+            <div class="testimonial">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"I've been boating for 20 years and still learn something new every month. The member discounts alone have saved me over $800. Lifetime membership was a no-brainer."</p>
+                <div class="author-info">Robert Thompson, Hunter 40</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="container">
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I cancel my Premium membership anytime?</div>
+                <div class="faq-answer">Yes! Premium monthly memberships can be canceled at any time with no penalties or fees. You'll have access until the end of your current billing period.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What if I upgrade from Premium to Lifetime later?</div>
+                <div class="faq-answer">You can upgrade anytime! We'll credit your paid Premium months toward the Lifetime price (up to 12 months), so you don't lose any value.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How quickly will I see results?</div>
+                <div class="faq-answer">Most members save money in their first month by avoiding at least one costly mistake or catching a problem early. The average member saves $2,400+ in year one.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Is this only for Chesapeake Bay boaters?</div>
+                <div class="faq-answer">While we have Bay-specific content, 80% of our guides apply to all boaters. We have members from Florida to Alaska who benefit from our expert advice.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you offer refunds?</div>
+                <div class="faq-answer">Absolutely. Try us risk-free for 30 days. If you're not satisfied for ANY reason, we'll refund 100% of your payment, no questions asked.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I share my membership with my crew/family?</div>
+                <div class="faq-answer">Yes! Your membership covers anyone who helps you maintain and operate your boat. We encourage shared learning.</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 40px 20px;">
+            <h2 style="color: #0c4a6e; margin-bottom: 20px;">Ready to Join 2,000+ Smart Boat Owners?</h2>
+            <p style="color: #666; margin-bottom: 30px; font-size: 1.1em;">Choose your membership level above and start maintaining your boat like a pro today.</p>
+        </div>
+    </div>
+
+    <script>
+        function goToHub() {
+            alert('Returning to Campaign Hub...');
+            // In production: window.location.href = '/hub.html';
+        }
+
+        function goToLanding() {
+            alert('Opening Winterization Guide Landing Page...');
+            // In production: window.location.href = '/landing.html';
+        }
+
+        async function selectMembership(tier) {
+            const price = tier === 'premium' ? 19.99 : 299;
+            const tierName = tier === 'premium' ? 'Premium Monthly' : 'Lifetime Access';
+
+            // Save membership selection
+            const membership = {
+                timestamp: new Date().toISOString(),
+                source: 'membership_page',
+                type: 'membership',
+                tier: tier,
+                price: price
+            };
+
+            try {
+                const result = await window.storage.get('boat_pro_all_leads');
+                const leads = result ? JSON.parse(result.value) : [];
+                leads.push(membership);
+                await window.storage.set('boat_pro_all_leads', JSON.stringify(leads));
+
+                alert(`✅ Success!\n\nYou've selected: ${tierName} - $${price}${tier === 'premium' ? '/month' : ''}\n\nIn production, this would redirect to payment processing.\n\nYour selection has been tracked in the analytics dashboard!`);
+
+                // In production: window.location.href = `/checkout/${tier}`;
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Processing membership selection...');
+            }
+        }
+    </script>
+</body>
+</html>
