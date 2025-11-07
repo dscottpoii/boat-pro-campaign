@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign ROI Calculator - The Boat Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calculator {
+            background: white;
+            max-width: 800px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #0c4a6e;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #0c4a6e;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #0284c7;
+            margin-top: 20px;
+        }
+
+        .result-box.positive {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left-color: #16a34a;
+        }
+
+        .result-box.negative {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left-color: #dc2626;
+        }
+
+        .result-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #0c4a6e;
+            margin-bottom: 10px;
+        }
+
+        .result-box.positive .result-value {
+            color: #16a34a;
+        }
+
+        .result-box.negative .result-value {
+            color: #dc2626;
+        }
+
+        .result-detail {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .calc-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .tip {
+            background: #fef3c7;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #78350f;
+        }
+
+        .breakdown {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            color: #0c4a6e;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .result-value {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div style="background: #0c4a6e; padding: 12px 20px; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center;">
+        <a href="#" onclick="goToHub(); return false;" style="color: white; text-decoration: none; font-weight: 600;">← Campaign Hub</a>
+        <div style="color: white; font-weight: 600;">ROI Calculator</div>
+        <a href="#" onclick="goToAnalytics(); return false;" style="color: white; text-decoration: none; font-weight: 600;">Analytics →</a>
+    </div>
+
+    <div style="padding-top: 50px;">
+    <div class="calculator">
+        <div class="header">
+            <h1>📊 Campaign ROI Calculator</h1>
+            <p>Calculate Your Facebook Campaign Returns</p>
+        </div>
+
+        <div class="content">
+            <!-- Input Section -->
+            <div class="section">
+                <h2>💰 Your Investment</h2>
+                
+                <div class="input-group">
+                    <label>Monthly Ad Spend ($)</label>
+                    <input type="number" id="adSpend" value="1200" min="0" step="100">
+                </div>
+
+                <div class="input-group">
+                    <label>Setup Costs (Website, Tools, etc.) ($)</label>
+                    <input type="number" id="setupCosts" value="500" min="0" step="50">
+                </div>
+
+                <div class="input-group">
+                    <label>Monthly Software Costs (Email, Tools) ($)</label>
+                    <input type="number" id="monthlyCosts" value="50" min="0" step="10">
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📈 Expected Results</h2>
+                
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Leads Per Month</label>
+                        <input type="number" id="leadsPerMonth" value="128" min="0" step="10">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Conversion Rate (%)</label>
+                        <input type="number" id="conversionRate" value="13" min="0" max="100" step="1">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Premium Members (70%)</label>
+                        <input type="number" id="premiumMembers" value="12" min="0" step="1">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Lifetime Members (30%)</label>
+                        <input type="number" id="lifetimeMembers" value="5" min="0" step="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💎 Pricing</h2>
+                
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Premium Monthly Price ($)</label>
+                        <input type="number" id="premiumPrice" value="19.99" min="0" step="0.01">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Lifetime Price ($)</label>
+                        <input type="number" id="lifetimePrice" value="299" min="0" step="1">
+                    </div>
+                </div>
+            </div>
+
+            <button class="calc-btn" onclick="calculate()">Calculate ROI</button>
+
+            <!-- Results Section -->
+            <div id="results" style="display: none;">
+                <div class="section">
+                    <h2>📊 Your Results</h2>
+
+                    <div class="grid-2">
+                        <div class="result-box" id="revenueBox">
+                            <div class="result-label">Total Revenue (3 Months)</div>
+                            <div class="result-value" id="totalRevenue">$0</div>
+                            <div class="result-detail" id="revenueDetail"></div>
+                        </div>
+
+                        <div class="result-box" id="profitBox">
+                            <div class="result-label">Net Profit</div>
+                            <div class="result-value" id="netProfit">$0</div>
+                            <div class="result-detail" id="profitDetail"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2" style="margin-top: 20px;">
+                        <div class="result-box" id="roiBox">
+                            <div class="result-label">Return on Investment</div>
+                            <div class="result-value" id="roiValue">0%</div>
+                            <div class="result-detail">Every $1 spent returns <span id="returnMultiple">$0</span></div>
+                        </div>
+
+                        <div class="result-box">
+                            <div class="result-label">Cost Per Member</div>
+                            <div class="result-value" id="cpm">$0</div>
+                            <div class="result-detail" id="cpmDetail"></div>
+                        </div>
+                    </div>
+
+                    <div class="breakdown">
+                        <h3 style="color: #0c4a6e; margin-bottom: 15px;">Revenue Breakdown</h3>
+                        <div class="breakdown-item">
+                            <span>Premium Monthly (3 months):</span>
+                            <span id="premiumRevenue">$0</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Lifetime Sales:</span>
+                            <span id="lifetimeRevenue">$0</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Total Investment:</span>
+                            <span id="totalInvestment">$0</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>NET PROFIT:</span>
+                            <span id="finalProfit">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="tip">
+                        💡 <strong>Pro Tip:</strong> <span id="proTip"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Navigation functions
+        function goToHub() {
+            alert('Returning to Campaign Hub...');
+            // In production: window.location.href = '/hub.html';
+        }
+
+        function goToAnalytics() {
+            alert('Opening Analytics Dashboard...');
+            // In production: window.location.href = '/analytics.html';
+        }
+
+        function calculate() {
+            // Get inputs
+            const adSpend = parseFloat(document.getElementById('adSpend').value) || 0;
+            const setupCosts = parseFloat(document.getElementById('setupCosts').value) || 0;
+            const monthlyCosts = parseFloat(document.getElementById('monthlyCosts').value) || 0;
+            const leadsPerMonth = parseInt(document.getElementById('leadsPerMonth').value) || 0;
+            const conversionRate = parseFloat(document.getElementById('conversionRate').value) || 0;
+            const premiumMembers = parseInt(document.getElementById('premiumMembers').value) || 0;
+            const lifetimeMembers = parseInt(document.getElementById('lifetimeMembers').value) || 0;
+            const premiumPrice = parseFloat(document.getElementById('premiumPrice').value) || 0;
+            const lifetimePrice = parseFloat(document.getElementById('lifetimePrice').value) || 0;
+
+            // Calculate 3-month investment
+            const totalAdSpend = adSpend * 3;
+            const totalMonthlyCosts = monthlyCosts * 3;
+            const totalInvestment = totalAdSpend + setupCosts + totalMonthlyCosts;
+
+            // Calculate revenue
+            const premiumMonthlyRevenue = premiumMembers * premiumPrice * 3;
+            const lifetimeRevenue = lifetimeMembers * lifetimePrice;
+            const totalRevenue = premiumMonthlyRevenue + lifetimeRevenue;
+
+            // Calculate profit and ROI
+            const netProfit = totalRevenue - totalInvestment;
+            const roi = totalInvestment > 0 ? ((netProfit / totalInvestment) * 100).toFixed(0) : 0;
+            const returnMultiple = totalInvestment > 0 ? (totalRevenue / totalInvestment).toFixed(2) : 0;
+
+            // Calculate cost per member
+            const totalMembers = premiumMembers + lifetimeMembers;
+            const costPerMember = totalMembers > 0 ? (totalInvestment / totalMembers).toFixed(2) : 0;
+
+            // Calculate cost per lead
+            const totalLeads = leadsPerMonth * 3;
+            const costPerLead = totalLeads > 0 ? (totalAdSpend / totalLeads).toFixed(2) : 0;
+
+            // Update results
+            document.getElementById('totalRevenue').textContent = `$${totalRevenue.toLocaleString()}`;
+            document.getElementById('revenueDetail').textContent = `From ${totalMembers} members over 3 months`;
+
+            document.getElementById('netProfit').textContent = `$${netProfit.toLocaleString()}`;
+            document.getElementById('profitDetail').textContent = netProfit > 0 ? `After $${totalInvestment.toLocaleString()} investment` : `Loss: Review strategy`;
+
+            document.getElementById('roiValue').textContent = `${roi}%`;
+            document.getElementById('returnMultiple').textContent = `$${returnMultiple}`;
+
+            document.getElementById('cpm').textContent = `$${costPerMember}`;
+            document.getElementById('cpmDetail').textContent = `Cost per lead: $${costPerLead}`;
+
+            // Breakdown
+            document.getElementById('premiumRevenue').textContent = `$${premiumMonthlyRevenue.toLocaleString()}`;
+            document.getElementById('lifetimeRevenue').textContent = `$${lifetimeRevenue.toLocaleString()}`;
+            document.getElementById('totalInvestment').textContent = `$${totalInvestment.toLocaleString()}`;
+            document.getElementById('finalProfit').textContent = `$${netProfit.toLocaleString()}`;
+
+            // Style profit box
+            const profitBox = document.getElementById('profitBox');
+            const roiBox = document.getElementById('roiBox');
+            
+            if (netProfit > 0) {
+                profitBox.classList.remove('negative');
+                profitBox.classList.add('positive');
+                roiBox.classList.add('positive');
+            } else {
+                profitBox.classList.remove('positive');
+                profitBox.classList.add('negative');
+                roiBox.classList.remove('positive');
+            }
+
+            // Pro tip based on ROI
+            let proTip = '';
+            if (roi > 200) {
+                proTip = 'Excellent ROI! Consider increasing your ad budget to scale these results.';
+            } else if (roi > 100) {
+                proTip = 'Good ROI! Focus on improving conversion rate from leads to members.';
+            } else if (roi > 0) {
+                proTip = 'Positive ROI but room for improvement. Test different ad creative and landing page variations.';
+            } else {
+                proTip = 'Negative ROI. Review your conversion funnel and reduce costs or improve conversion rates.';
+            }
+            document.getElementById('proTip').textContent = proTip;
+
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Calculate on page load
+        window.addEventListener('load', calculate);
+    </script>
+</body>
+</html>
