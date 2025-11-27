@@ -457,15 +457,19 @@
 
         function openPage(page) {
             const pageMap = {
-                'landing': 'Opening Winterization Landing Page with Pop-Up...',
-                'membership': 'Opening Membership Signup Page...',
-                'analytics': 'Opening Analytics Dashboard...',
-                'calculator': 'Opening ROI Calculator...',
-                'ads': 'Opening Facebook Ad Templates...',
-                'emails': 'Opening Email Follow-Up Sequence...'
+                'landing': 'landing.html',
+                'membership': 'membership.html',
+                'analytics': 'analytics.html',
+                'calculator': 'calculator.html',
+                'ads': '#', // Not yet implemented
+                'emails': '#' // Not yet implemented
             };
 
-            alert(pageMap[page] + '\n\nIn production, this would navigate to the actual page.\n\nFor this demo, all pages are available as separate artifacts in your conversation.');
+            if (pageMap[page] === '#') {
+                alert('This page is not yet implemented. Coming soon!');
+            } else {
+                window.location.href = pageMap[page];
+            }
         }
 
         function testCampaign() {
